@@ -26,7 +26,6 @@ class ChoiceWidget extends StatelessWidget {
         ),
       ),
       child: Stack(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 12),
