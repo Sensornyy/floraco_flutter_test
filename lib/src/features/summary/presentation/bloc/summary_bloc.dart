@@ -1,4 +1,3 @@
-import 'package:floraco_flutter_test/core/use_case/use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -7,6 +6,7 @@ import 'package:floraco_flutter_test/src/features/summary/domain/use_cases/get_c
 import 'package:floraco_flutter_test/src/features/summary/domain/use_cases/get_date_of_birth_use_case.dart';
 import 'package:floraco_flutter_test/src/features/summary/domain/use_cases/set_choice_use_case.dart';
 import 'package:floraco_flutter_test/src/features/summary/domain/use_cases/set_date_of_birth_use_case.dart';
+import 'package:floraco_flutter_test/core/use_case/use_case.dart';
 
 part 'summary_event.dart';
 
@@ -39,7 +39,7 @@ class SummaryBloc extends Bloc<SummaryEvent, SummaryState> {
           (result) => emit(const SummaryState.successSet()),
         );
       }, get: () async {
-        emit(SummaryState.initial());
+        emit(const SummaryState.initial());
         final choiceResult = await getChoice(NoParams());
         final dateOfBirthResult = await getDateOfBirth(NoParams());
 
@@ -47,8 +47,6 @@ class SummaryBloc extends Bloc<SummaryEvent, SummaryState> {
             (choice) {
           dateOfBirthResult.fold(
               (failure) => emit(const SummaryState.failure()), (dateOfBirth) {
-            print('$choice + CHOICE');
-            print('$dateOfBirth + BIRTH');
             emit(
               SummaryState.successGet(choice!, dateOfBirth!),
             );

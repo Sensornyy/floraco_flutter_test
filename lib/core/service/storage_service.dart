@@ -14,7 +14,6 @@ class StorageService {
   }
 
   Future<void> setDateOfBirth(String dateOfBirth) async {
-    print(dateOfBirth);
     await storage.write(key: 'dateOfBirth', value: dateOfBirth);
   }
 
