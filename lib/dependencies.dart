@@ -1,4 +1,3 @@
-import 'package:floraco_flutter_test/src/features/summary/data/data_source/summary_data_source.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:floraco_flutter_test/core/service/storage_service.dart';
@@ -9,6 +8,7 @@ import 'package:floraco_flutter_test/src/features/summary/domain/use_cases/get_d
 import 'package:floraco_flutter_test/src/features/summary/domain/use_cases/set_choice_use_case.dart';
 import 'package:floraco_flutter_test/src/features/summary/domain/use_cases/set_date_of_birth_use_case.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:floraco_flutter_test/src/features/summary/data/data_source/summary_data_source.dart';
 
 final getIt = GetIt.instance;
 
@@ -24,11 +24,13 @@ void init() {
       getIt(),
     ),
   );
+
   getIt.registerLazySingleton(
     () => SetChoiceUseCase(
       getIt(),
     ),
   );
+
   getIt.registerLazySingleton(
     () => SetDateOfBirthUseCase(
       getIt(),

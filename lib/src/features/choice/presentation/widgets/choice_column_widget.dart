@@ -19,7 +19,8 @@ class ChoiceColumnWidget extends StatelessWidget {
             title: 'Track my period',
             subtitle: 'contraception and wellbeing',
             onTap: () {
-              BlocProvider.of<SummaryBloc>(context).add(const SummaryEvent.setChoice('Track my period'));
+              BlocProvider.of<SummaryBloc>(context)
+                  .add(const SummaryEvent.setChoice('Track my period'));
               BlocProvider.of<NavigationBloc>(context).add(
                 const NavigationEvent.goToDateOfBirthPage(),
               );
@@ -30,7 +31,8 @@ class ChoiceColumnWidget extends StatelessWidget {
             title: 'Get pregnant',
             subtitle: 'learn about reproductive health',
             onTap: () {
-              BlocProvider.of<SummaryBloc>(context).add(const SummaryEvent.setChoice('Get pregnant'));
+              BlocProvider.of<SummaryBloc>(context)
+                  .add(const SummaryEvent.setChoice('Get pregnant'));
               BlocProvider.of<NavigationBloc>(context).add(
                 const NavigationEvent.goToDateOfBirthPage(),
               );

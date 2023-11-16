@@ -46,16 +46,13 @@ class SummaryBloc extends Bloc<SummaryEvent, SummaryState> {
         choiceResult.fold((failure) => emit(const SummaryState.failure()),
             (choice) {
           dateOfBirthResult.fold(
-            (failure) => emit(const SummaryState.failure()),
-            (dateOfBirth) {
-              print('$choice + CHOICE');
-              print('$dateOfBirth + BIRTH' );
-              emit(
-                SummaryState.successGet(choice!, dateOfBirth!),
-              );
-
-            }
-          );
+              (failure) => emit(const SummaryState.failure()), (dateOfBirth) {
+            print('$choice + CHOICE');
+            print('$dateOfBirth + BIRTH');
+            emit(
+              SummaryState.successGet(choice!, dateOfBirth!),
+            );
+          });
         });
       });
     });
