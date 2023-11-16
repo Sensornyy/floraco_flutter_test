@@ -1,4 +1,5 @@
 import 'package:floraco_flutter_test/core/navigation/navigation_bloc.dart';
+import 'package:floraco_flutter_test/src/features/summary/presentation/bloc/summary_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +24,8 @@ class _DateOfBirthState extends State<DateOfBirth> {
 
   @override
   Widget build(BuildContext context) {
+    var selectedYear = '1995';
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -61,14 +64,12 @@ class _DateOfBirthState extends State<DateOfBirth> {
             top: 200,
             left: 50,
             right: 50,
-            child: Center(
-              child: Text(
-                'Log in your date of birth',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.nunito(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w700,
-                ),
+            child: Text(
+              'Log in your date of birth',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunito(
+                fontSize: 25,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -114,7 +115,11 @@ class _DateOfBirthState extends State<DateOfBirth> {
                     controller: _scrollController,
                     itemExtent: 60.0,
                     physics: const FixedExtentScrollPhysics(),
-                    onSelectedItemChanged: (index) {},
+                    onSelectedItemChanged: (index) {
+                      print(selectedYear);
+                      selectedYear = (index + 1900).toString();
+                      print(selectedYear);
+                    },
                     children: List.generate(
                       124,
                       (index) => Center(
@@ -138,6 +143,9 @@ class _DateOfBirthState extends State<DateOfBirth> {
             right: 110,
             child: GestureDetector(
               onTap: () {
+                print(selectedYear);
+                BlocProvider.of<SummaryBloc>(context)
+                    .add(SummaryEvent.setDateOfBirth(selectedYear));
                 BlocProvider.of<NavigationBloc>(context).add(
                   const NavigationEvent.goToSummaryPage(),
                 );
