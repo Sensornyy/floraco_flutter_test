@@ -1,4 +1,5 @@
 import 'package:floraco_flutter_test/core/navigation/navigation_bloc.dart';
+import 'package:floraco_flutter_test/src/features/summary/presentation/bloc/summary_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:floraco_flutter_test/src/features/choice/presentation/widgets/choice_widget.dart';
@@ -18,6 +19,8 @@ class ChoiceColumnWidget extends StatelessWidget {
             title: 'Track my period',
             subtitle: 'contraception and wellbeing',
             onTap: () {
+              BlocProvider.of<SummaryBloc>(context)
+                  .add(const SummaryEvent.setChoice('Track my period'));
               BlocProvider.of<NavigationBloc>(context).add(
                 const NavigationEvent.goToDateOfBirthPage(),
               );
@@ -28,6 +31,8 @@ class ChoiceColumnWidget extends StatelessWidget {
             title: 'Get pregnant',
             subtitle: 'learn about reproductive health',
             onTap: () {
+              BlocProvider.of<SummaryBloc>(context)
+                  .add(const SummaryEvent.setChoice('Get pregnant'));
               BlocProvider.of<NavigationBloc>(context).add(
                 const NavigationEvent.goToDateOfBirthPage(),
               );

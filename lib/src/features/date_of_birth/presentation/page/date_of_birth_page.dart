@@ -1,9 +1,14 @@
-import 'package:floraco_flutter_test/core/navigation/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:floraco_flutter_test/src/features/date_of_birth/constants/date_of_birth_constants.dart';
+import 'package:floraco_flutter_test/core/navigation/navigation_bloc.dart';
+import 'package:floraco_flutter_test/src/features/summary/presentation/bloc/summary_bloc.dart';
+import 'package:floraco_flutter_test/src/shared/widgets/shared_button.dart';
+import 'package:floraco_flutter_test/src/shared/constants/shared_constants.dart';
+import 'package:floraco_flutter_test/src/features/date_of_birth/presentation/widgets/date_picker_widget.dart';
 
 class DateOfBirth extends StatefulWidget {
   const DateOfBirth({Key? key}) : super(key: key);
@@ -18,57 +23,59 @@ class _DateOfBirthState extends State<DateOfBirth> {
   @override
   void initState() {
     super.initState();
-    _scrollController = FixedExtentScrollController(initialItem: 95);
+    _scrollController = FixedExtentScrollController(
+      initialItem: DateOfBirthConstants.initialItem,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    var selectedYear = DateOfBirthConstants.selectedYear;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: SharedConstants.scaffoldColor,
       body: Stack(
         children: [
-          SvgPicture.asset('assets/images/Vector 10.svg'),
+          SvgPicture.asset(SharedConstants.vector10Path),
           Positioned(
             left: 12,
             top: 12,
-            child: SvgPicture.asset('assets/images/Vector 11.svg'),
+            child: SvgPicture.asset(SharedConstants.vector11Path),
           ),
           Positioned(
             right: 70,
             top: 35,
-            child: SvgPicture.asset('assets/images/Ellipse 14.svg'),
+            child: SvgPicture.asset(SharedConstants.ellipse14Path),
           ),
           Positioned(
             right: 65,
             top: 70,
-            child: SvgPicture.asset('assets/images/Ellipse 15.svg'),
+            child: SvgPicture.asset(SharedConstants.ellipse15Path),
           ),
           Positioned(
             right: 0,
             bottom: 280,
-            child: SvgPicture.asset('assets/images/Vector 14.svg'),
+            child: SvgPicture.asset(SharedConstants.vector14Path),
           ),
           Positioned(
             left: 26,
             bottom: 85,
-            child: SvgPicture.asset('assets/images/Vector 9.svg'),
+            child: SvgPicture.asset(SharedConstants.vector9Path),
           ),
           Align(
             alignment: Alignment.bottomRight,
-            child: SvgPicture.asset('assets/images/Vector 6.svg'),
+            child: SvgPicture.asset(SharedConstants.vector6Path),
           ),
           Positioned(
             top: 200,
             left: 50,
             right: 50,
-            child: Center(
-              child: Text(
-                'Log in your date of birth',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.nunito(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w700,
-                ),
+            child: Text(
+              DateOfBirthConstants.logInDateOfBirth,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunito(
+                fontSize: 25,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -80,109 +87,30 @@ class _DateOfBirthState extends State<DateOfBirth> {
               width: 355,
               height: 67,
               decoration: ShapeDecoration(
-                color: const Color(0xFFF6F6F6),
+                color: SharedConstants.pickerColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
             ),
           ),
-          Positioned(
-            top: 300,
-            left: 50,
-            right: 50,
-            child: Center(
-              child: SizedBox(
-                height: 250,
-                child: ShaderMask(
-                  shaderCallback: (Rect rect) {
-                    return LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.grey.withOpacity(0.5),
-                        Colors.black,
-                        Colors.grey.withOpacity(0.5),
-                        Colors.transparent,
-                      ],
-                      stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
-                    ).createShader(rect);
-                  },
-                  blendMode: BlendMode.dstIn,
-                  child: ListWheelScrollView(
-                    controller: _scrollController,
-                    itemExtent: 60.0,
-                    physics: const FixedExtentScrollPhysics(),
-                    onSelectedItemChanged: (index) {},
-                    children: List.generate(
-                      124,
-                      (index) => Center(
-                        child: Text(
-                          (DateTime.now().year - 123 + index).toString(),
-                          style: GoogleFonts.nunito(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 40,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          DatePickerWidget(
+            controller: _scrollController,
+            onSelectedItemChanged: (index) {
+              selectedYear =
+                  (index + DateOfBirthConstants.indexToYear).toString();
+            },
           ),
-          Positioned(
-            bottom: 90,
-            left: 110,
-            right: 110,
-            child: GestureDetector(
-              onTap: () {
-                BlocProvider.of<NavigationBloc>(context).add(
-                  const NavigationEvent.goToSummaryPage(),
-                );
-              },
-              child: Container(
-                width: 200,
-                height: 52,
-                decoration: ShapeDecoration(
-                  gradient: LinearGradient(
-                    begin: const Alignment(0.00, -1.00),
-                    end: const Alignment(0, 1),
-                    colors: [
-                      const Color(0xFF454581),
-                      const Color(0xFF454581).withOpacity(0.5)
-                    ],
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Text(
-                        'Next',
-                        style: GoogleFonts.nunito(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 12,
-                      right: 17,
-                      child: SvgPicture.asset(
-                        'assets/icons/white_arrow.svg',
-                        width: 27,
-                        height: 27,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          SharedButton(
+            title: DateOfBirthConstants.buttonText,
+            onTap: () {
+              BlocProvider.of<SummaryBloc>(context).add(
+                SummaryEvent.setDateOfBirth(selectedYear),
+              );
+              BlocProvider.of<NavigationBloc>(context).add(
+                const NavigationEvent.goToSummaryPage(),
+              );
+            },
           )
         ],
       ),

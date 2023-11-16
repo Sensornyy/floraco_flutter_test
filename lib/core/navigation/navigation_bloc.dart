@@ -18,6 +18,10 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
         emit(
           const NavigationState.summary(),
         );
+      }, goToChoicePage: () {
+        emit(
+          const NavigationState.choice(),
+        );
       });
     });
   }
