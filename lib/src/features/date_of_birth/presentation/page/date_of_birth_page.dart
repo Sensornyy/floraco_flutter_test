@@ -1,4 +1,6 @@
+import 'package:floraco_flutter_test/core/navigation/navigation_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -134,44 +136,51 @@ class _DateOfBirthState extends State<DateOfBirth> {
             bottom: 90,
             left: 110,
             right: 110,
-            child: Container(
-              width: 200,
-              height: 52,
-              decoration: ShapeDecoration(
-                gradient: LinearGradient(
-                  begin: const Alignment(0.00, -1.00),
-                  end: const Alignment(0, 1),
-                  colors: [
-                    const Color(0xFF454581),
-                    const Color(0xFF454581).withOpacity(0.5)
-                  ],
+            child: GestureDetector(
+              onTap: () {
+                BlocProvider.of<NavigationBloc>(context).add(
+                  const NavigationEvent.goToSummaryPage(),
+                );
+              },
+              child: Container(
+                width: 200,
+                height: 52,
+                decoration: ShapeDecoration(
+                  gradient: LinearGradient(
+                    begin: const Alignment(0.00, -1.00),
+                    end: const Alignment(0, 1),
+                    colors: [
+                      const Color(0xFF454581),
+                      const Color(0xFF454581).withOpacity(0.5)
+                    ],
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              child: Stack(
-                children: [
-                  Center(
-                    child: Text(
-                      'Next',
-                      style: GoogleFonts.nunito(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Text(
+                        'Next',
+                        style: GoogleFonts.nunito(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 12,
-                    right: 17,
-                    child: SvgPicture.asset(
-                      'assets/icons/white_arrow.svg',
-                      width: 27,
-                      height: 27,
+                    Positioned(
+                      bottom: 12,
+                      right: 17,
+                      child: SvgPicture.asset(
+                        'assets/icons/white_arrow.svg',
+                        width: 27,
+                        height: 27,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           )
